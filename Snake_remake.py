@@ -1,14 +1,12 @@
-from curses import COLS
-from pdb import Restart
 import tkinter
 import random
 
-ROWS = 30
-COLS - 30
-TILE_SIZE = 30
+ROWS = 25
+COLS - 25 # type: ignore
+TILE_SIZE = 25
 
-WINDOW_WIDTH = TILE_SIZE * COLS   # 30*30 = 900
-WINDOW_HEIGHT = TILE_SIZE * ROWS  # 30*30 = 900
+WINDOW_WIDTH = TILE_SIZE * COLS   # type: ignore # 25*25 = 625
+WINDOW_HEIGHT = TILE_SIZE * ROWS  # 25*25 = 625
 
 
 class Tile:
@@ -22,7 +20,7 @@ window = tkinter.Tk()
 window.title("The Snake Game")
 window.resizable(False, False)
 
-canvas = tkinter.Canvas(window, bg="black", width=WINDOW_WIDTH, height=WINDOW_HEIGHT, borderwidth=0
+canvas = tkinter.Canvas(window, bg="black", width=WINDOW_WIDTH, height=WINDOW_HEIGHT, borderwidth=0,
                         highlightthickness=0)
 canvas.pack()
 window.update()
@@ -56,7 +54,7 @@ def change_direction(e): velocityY, game_over
 
 global velocityX, velocityY, game_over
 if (game_over):
-    Restart  # edit this code to reset game variables to play again
+    return  # edit this code to reset game variables to play again
 
 if (exec.keysym == "Up" and velocityY != 1):
     velocityX = 0
@@ -84,9 +82,8 @@ def move():
         return
 
     for tile in snake_body:
-        (snake.x == tile.x and snake.y == tile.y): # type: ignore
-        snake_body.append(Tile(food.x, food.y))
-        game_over = True
+        if (snake.x == tile.x and snake.y == tile.y):
+            game_over = True
         return
     
     # collision
