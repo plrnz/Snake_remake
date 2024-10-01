@@ -1,3 +1,4 @@
+from curses import COLS
 from pdb import Restart
 import tkinter
 import random
@@ -57,18 +58,34 @@ global velocityX, velocityY, game_over
 if (game_over):
     Restart  # edit this code to reset game variables to play again
 
-if (e.keysym == "Up" and velocityY != 1):
+if (exec.keysym == "Up" and velocityY != 1):
     velocityX = 0
     velocityY = -1
 
-elif (e.keysym == "Down" and velocityX != -1):
+elif (exec.keysym == "Down" and velocityX != -1):
     velocityX = 0
     velocityY = 1
 
-elif (e.keysym == "Right" and velocityX != 1):
+elif (exec.keysym == "Right" and velocityX != 1):
     velocityX = 1
     velocityY = 0
 
-elif (e.keysym == "Left" and velocityX != -1):
+elif (exec.keysym == "Left" and velocityX != -1):
     velocityX = 1
     velocityY = 0
+
+def move():
+    global snake, food, snake_body, game_over, score
+    if (game_over):
+        return
+
+    if(snake.x < 0 or snake.x >= WINDOW_WIDTH or snake.y < 0 or snake.y >= WINDOW_HEIGHT):
+        game_over = True
+        return
+
+    for tile in snake_body:
+        (snake.x == tile.x and snake.y == tile.y): # type: ignore
+        snake_body.append(Tile(food.x, food.y))
+        game_over = True
+        return
+    
