@@ -67,7 +67,22 @@ def change_direction(e):  # e = event
     elif (e.keysym == "Left" and velocityX != 1):
         velocityX = -1
         velocityY = 0
-        
+
     elif (e.keysym == "Right" and velocityX != -1):
         velocityX = 1
         velocityY = 0
+
+
+def move():
+    global snake, food, snake_body, game_over, score
+    if (game_over):
+        return
+    
+    if (snake.x < 0 or snake.x >= WINDOW_WIDTH or snake.y < 0 or snake.y >= WINDOW_HEIGHT):
+        game_over = True
+        return
+    
+    for tile in snake_body:
+        if (snake.x == tile.x and snake.y == tile.y):
+            game_over = True
+            return
