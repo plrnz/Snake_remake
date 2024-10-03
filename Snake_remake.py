@@ -106,4 +106,11 @@ def move():
             tile.y = prev_tile.y
     snake.x += velocityX * TILE_SIZE
     snake.y += velocityY * TILE_SIZE
+
+
+
+    def draw():
+         global snake, food, snake_body, game_over, score
+    move()
     
+    canvas.delete("all")
