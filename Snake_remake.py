@@ -86,3 +86,10 @@ def move():
         if (snake.x == tile.x and snake.y == tile.y):
             game_over = True
             return
+
+# collision
+    if (snake.x == food.x and snake.y == food.y):
+        snake_body.append(Tile(food.x, food.y))
+        food.x = random.randint(0, COLS - 1) * TILE_SIZE
+        food.y = random.randint(0, ROWS - 1) * TILE_SIZE
+        score += 1
