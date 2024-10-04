@@ -17,10 +17,10 @@ class Tile:
 
 # game window
 window = tkinter.Tk()
-window.title("Snake")
+window.title("The Snake Game")
 window.resizable(False, False)
 
-canvas = tkinter.Canvas(window, bg="black", width=WINDOW_WIDTH, height=WINDOW_HEIGHT, borderwidth=0,
+canvas = tkinter.Canvas(window, bg="grey", width=WINDOW_WIDTH, height=WINDOW_HEIGHT, borderwidth=0,
                         highlightthickness=0)
 canvas.pack()
 window.update()
@@ -104,17 +104,35 @@ def move():
             prev_tile = snake_body[i - 1]
             tile.x = prev_tile.x
             tile.y = prev_tile.y
+
     snake.x += velocityX * TILE_SIZE
     snake.y += velocityY * TILE_SIZE
 
 
 
-    def draw():
-         global snake, food, snake_body, game_over, score
+def draw():
+    global snake, food, snake_body, game_over, score
     move()
 
     canvas.delete("all")
 
-# draw food
+    # draw food
     canvas.create_rectangle(food.x, food.y, food.x + TILE_SIZE, food.y + TILE_SIZE, fill='red')
-    
+
+   # draw snake
+    canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill='black')
+
+    for tile in snake_body:
+        canvas.create_rectangle(tile.x, tile.y, tile.x + TILE_SIZE, tile.y + TILE_SIZE, fill='black')
+
+    if (game_over):
+        canvas.create_text(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, font="Arial 20", text=f"Game Over: {score}",
+                           fill="white")
+    else:
+        canvas.create_text(30, 20, font="Arial 10", text=f"Score: {score}", fill="white")
+
+    window.after(100, draw)  # call draw again every 100ms (1/10 of a second) = 10 frames per second
+
+draw()
+window.bind("<KeyRelease>", change_direction)  # when you press on any key and then let go
+window.mainloop()  # used for listening to window events like key presses
